@@ -33,6 +33,15 @@ $(document).on("click",".faktur",function(e){
         
        
     });
+$(document).on("click",".hpskirim",function(e){
+      id = $(this).attr("idkirim");
+      ket = 'dengan nota: '+$(this).attr("nota")+' dan pengeriman tanggal '+$(this).attr("tgl");
+      hapus($(this).attr("tgl"),$(this).attr("nota"),ket);
+      riwayatbarang($(this).attr("nota"));
+      return false;
+        
+       
+    });
 $(document).ready(function() {
  $('button').tooltip({
   trigger: 'click',
@@ -283,7 +292,8 @@ $.ajax({
          jQuery.each(data.riwayat, function(index,item) {
           tgl = moment(index, 'YYYY-MM-DD').format('DD MMM YYYY');
             display += '<li><div class="block"><div class="block_content"><h2 class="title"><a><i class="fa fa-truck" aria-hidden="true">'+
-            '</i> Pengiriman Kepada &nbsp;'+data.konsumen+'&nbsp;</a><a class="btn btn-round btn-danger btn-xs faktur" nota="'+data.nota+'" tgl="'+index+'">Faktur</a></h2>';
+            '</i> Pengiriman Kepada &nbsp;'+data.konsumen+'&nbsp;</a><a class="btn btn-round btn-success btn-xs faktur" nota="'+data.nota+'" tgl="'+index+'">Faktur</a>';
+            display +='<a class="btn btn-round btn-danger btn-xs hpskirim" idkirim="'+item.id+'" nota="'+data.nota+'" tgl="'+index+'">Hapus</a></h2>';
             display += '<div class="byline"><span>'+tgl+'</span> oleh <a>Hqpacks</a></div>';
             display += '<p class="excerpt">Telah Dilakukan Pengiriman pada tanggal '+moment(index, 'YYYY-MM-DD').format('DD MMM YYYY')+' Kepada konsumen: '+data.konsumen+' No nota: '+data.nota+' dengan rincian berikut: ';
             display += '<table class="table table-striped"><thead><tr><th>Jumlah</th><th>Barang</th></tr></thead><tbody>';
@@ -635,12 +645,13 @@ $.ajax({
 });
 }
 
-function hapus(id,ket){
-      if(confirm('apakah ada yakin ingin menghapus data ini "'+ket+'"')){
+function hapus(tgl,nota,ket){
+  console.log(tgl)
+      if(confirm('apakah ada yakin ingin menghapus data ini '+ket)){
     var url = site_url+"Master/hpsstock/";
   $.ajax({
         url : url,
-        data: {param:'id',key:id},
+        data: {tanggal:tgl,nota:nota},
         type: "GET",
         dataType: "JSON",
         success: function(data)
@@ -663,7 +674,7 @@ function hapusnota(nota,ket){
     var url = site_url+"Master/hpsstock/";
   $.ajax({
         url : url,
-        data: {param:'nota',key:nota},
+        data: {nota:nota},
         type: "GET",
         dataType: "JSON",
         success: function(data)

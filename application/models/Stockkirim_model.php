@@ -3,8 +3,8 @@
 
  class Stockkirim_model extends CI_Model {
  	 var $table = 'followup';
- 	 var $column_order = array(null,'stock_kirim.tanggal','stock_kirim.nota','konsumen.konsumen','stock_kirim.barang','stock_kirim.jumlah','stock_kirim.note'); 
-     var $column_search = array('stock_kirim.tanggal','stock_kirim.nota','konsumen.konsumen','stock_kirim.barang','stock_kirim.jumlah','stock_kirim.note'); 
+ 	 var $column_order = array(null,'stock_kirim.tanggal','stock_kirim.nota','konsumen.konsumen','stock_kirim.barang','jumlah','stock_kirim.note'); 
+     var $column_search = array('stock_kirim.tanggal','stock_kirim.nota','konsumen.konsumen','stock_kirim.barang','jumlah','stock_kirim.note'); 
      var $order = array('stock_kirim.id' => 'desc'); 
         	public function __construct() {
                 parent::__construct();
@@ -15,10 +15,12 @@
         private function _get_datatables_query($tabel)
     {
         
-        $this->db->select("stock_kirim.id,stock_kirim.tanggal as tanggal,stock_kirim.nota,konsumen.konsumen,stock_kirim.barang,stock_kirim.jumlah,stock_kirim.note");
+        $this->db->select("stock_kirim.id,stock_kirim.tanggal as tanggal,stock_kirim.nota,konsumen.konsumen,stock_kirim.barang,sum(stock_kirim.jumlah) as jumlah,stock_kirim.note");
         $this->db->from($tabel);
+
         $this->db->join('laba_rugi', 'laba_rugi.id = stock_kirim.id_labarugi');
         $this->db->join('konsumen', 'konsumen.id = laba_rugi.id_konsumen');
+        $this->db->group_by('stock_kirim.nota');
        
         $i = 0;
         

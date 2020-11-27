@@ -2295,7 +2295,7 @@ class Master extends CI_Controller {
                 $row[] = $query->barang;
                 $row[] = $query->jumlah;
                 $row[] = $query->note;
-                $row[] = '<div class="btn-group"><a class="btn btn-primary dropdown-toggle btn-sm" data-toggle="dropdown" href="#"><i class="fa fa-cog"></i> <span class="caret"></span></a><ul role="menu" class="dropdown-menu pull-right"><li role="presentation"><a role="menuitem" tabindex="-1"  onclick="edit('."'".$query->id."'".')"  data-toggle="modal" href="#edit" title="Ubah"><i class="fa fa-edit"></i> Ubah</a></li><li role="presentation"><a role="menuitem" data-toggle="modal" tabindex="-1"  onclick="hapus('."'".$query->id."'".','."'".$no."'".')" title="Hapus"><i class="fa fa-times"></i> Hapus</a></li><li><a role="menuitem" data-toggle="modal" tabindex="-1"  onclick="hapusnota('."'".$query->nota."'".','."'".$no."'".')" title="Hapusnota"><i class="fa fa-times"></i> Hapus nota</a></li></ul></div>
+                $row[] = '<div class="btn-group"><a class="btn btn-primary dropdown-toggle btn-sm" data-toggle="dropdown" href="#"><i class="fa fa-cog"></i> <span class="caret"></span></a><ul role="menu" class="dropdown-menu pull-right"><li role="presentation"><a role="menuitem" tabindex="-1"  onclick="edit('."'".$query->id."'".')"  data-toggle="modal" href="#edit" title="Ubah"><i class="fa fa-edit"></i> Ubah</a></li><li><a role="menuitem" data-toggle="modal" tabindex="-1"  onclick="hapusnota('."'".$query->nota."'".','."'".$no."'".')" title="Hapus"><i class="fa fa-times"></i> Hapus</a></li></ul></div>
                       ';
             $data[] = $row;
         }
@@ -2339,12 +2339,9 @@ class Master extends CI_Controller {
     public function hpsstock()
     {
         $tabel='stock_kirim';
-        
-       $param = $this->input->get('param');
-       $key = $this->input->get('key');
-  
-
-        $this->Master_model->hpstemplate(array($param =>$key),$tabel);
+        $arr = $this->input->get();
+        unset($arr['csrf_gentelella_token']);
+        $this->Master_model->hpstemplate($arr,$tabel);
         echo json_encode(array("status" => TRUE));
         
     }      
