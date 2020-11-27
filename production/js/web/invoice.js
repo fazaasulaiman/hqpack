@@ -181,11 +181,13 @@ $(".datepicker").datepicker({
             },
         ],
          rowCallback: function(row, data, index){
+          
+         
           if (data[6] != null) {
              var d = new Date(data[6]);
                 if(Date.now() >= d){
                 /*$('td', row).css('background-color', '#fc0349');*/
-                 $(row).addClass('red');
+                 $(row).addClass('blue');
               }else{
                 $(row);
               }
@@ -194,11 +196,19 @@ $(".datepicker").datepicker({
              var d = new Date(data[7]);
                 if(Date.now() >= d){
                 /*$('td', row).css('background-color', '#fc0349');*/
+                $(row).removeClass('blue');
                  $(row).addClass('red');
               }else{
                 $(row);
               }
           }
+           if (data[5] == 'Lunas') {
+                $(row).removeClass('red');
+                $(row).removeClass('blue');
+                $(row).addClass('black');
+             
+          }
+           
                
             
         }

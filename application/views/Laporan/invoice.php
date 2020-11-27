@@ -87,7 +87,7 @@ tr.shown td.details-control {
                                   <label class="control-label col-md-3 col-sm-3 col-xs-12" for="konsumen">Tanggal deadline
                                   </label>
                                   <div class="col-md-6 col-sm-6 col-xs-12">
-                                    <input type="text" class="form-control col-md-7 col-xs-12 datepicker"  name="tanggal_deadline"  readonly="readonly"  id="tanggal_deadline">
+                                    <input type="text" class="form-control col-md-7 col-xs-12 datepicker"  name="tanggal_deadline"  readonly="readonly"  id="tanggal_deadline" required="required">
                                   </div>
                                 </div>
                                 <div class="item form-group">
