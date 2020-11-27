@@ -558,7 +558,7 @@ var dd = {
         {
             style: 'section',
             table: {
-                widths: ['4%','50%','*','*','20%' ],
+                widths: ['4%','*','5%','*','*' ],
                 body:items
                 
             },
@@ -574,7 +574,8 @@ var dd = {
                 body: transaksi
             },
             layout: 'Borders',
-             margin: [1, 10]
+             // margin: [left, top, right, bottom]
+             margin: [ 1, -15, 1, 10 ]
             
         },
         {text:'Nota warna putih : Nota lunas dengan cap basah  | Nota warna merah : Nota DP / belum lunas',
@@ -584,7 +585,7 @@ var dd = {
            style:'section',
             table: {
                 widths: ['25%','25%','25%','25%'],
-                heights: [70,0,0],
+                heights: [50,0,0],
                 body: [
                     [
                         {text:'Diterima oleh:',alignment:'center',},
