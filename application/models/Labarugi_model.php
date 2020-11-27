@@ -3,8 +3,8 @@
 
  class Labarugi_model extends CI_Model {
  	 var $table = 'followup';
- 	 var $column_order = array(null,'tanggal','nota','konsumen','barang','hpp','qty','harga','penjualan','laba_kotor','status'); 
-     var $column_search = array('tanggal','nota','konsumen','barang','hpp','qty','harga','penjualan','laba_kotor','status'); 
+ 	 var $column_order = array(null,'tanggal','nota','konsumen','barang','hpp','qty','harga','penjualan','laba_kotor','status','progress'); 
+     var $column_search = array('tanggal','nota','konsumen','barang','hpp','qty','harga','penjualan','laba_kotor','status','progress'); 
      var $order = array('id' => 'desc'); 
         	public function __construct() {
                 parent::__construct();
@@ -15,9 +15,10 @@
         private function _get_datatables_query($tabel)
     {
         
-        $this->db->select("konsumen.konsumen, laba_rugi.*");
+        $this->db->select("konsumen.konsumen, laba_rugi.*,invoice.status as progress");
         $this->db->from($tabel);
         $this->db->join('konsumen', 'konsumen.id = laba_rugi.id_konsumen');
+        $this->db->join('invoice', 'invoice.nota = laba_rugi.nota');
         if ($_POST['tanggal'] == '|') {
             $_POST['tanggal'] = '';
         }
@@ -58,8 +59,12 @@
                 }
                 elseif ($item == 'status') {
 
-                    $this->db->where($item, $_POST[$item]); 
-                }else{
+                    $this->db->where('laba_rugi.status', $_POST[$item]); 
+                }elseif ($item == 'progress') {
+
+                    $this->db->where('invoice.status', $_POST[$item]); 
+                }
+                else{
                     $this->db->like($item, $_POST[$item]);
                 }
 

@@ -5,7 +5,9 @@ $(document).ready(function() {
 /*var url = window.location.href.replace(/\/$/, '');  
 var lastSeg = url.substr(url.lastIndexOf('/') + 1);*/
 
-
+$("#resetfilter").closest('form').on('reset', function(event) {
+  $("#cariprogress").select2("val", "");
+});
   
     $("#harga,#qty").keyup(function(){
 
@@ -40,9 +42,31 @@ var lastSeg = url.substr(url.lastIndexOf('/') + 1);*/
         $('#penjualanup').val(hasil)
 
     });
-  
 
 
+ $('#cariprogress').select2({
+
+      placeholder: 'Ketikan disini',
+      
+      allowClear: true,
+      width: '100%',
+      ajax: {
+        url: site_url+'Master/sugest/status_invoice',
+        dataType: 'json',
+        type: "GET",
+            delay: 250,
+            data: function(params) {
+                return {
+                  search: params.term
+                }
+              },
+              processResults: function (data, page) {
+              return {
+                results: data
+              };
+            },
+      },
+    });
 
   $('#s2konsumen').select2({
       	placeholder: 'ketik nama konsumen',
@@ -92,6 +116,7 @@ var lastSeg = url.substr(url.lastIndexOf('/') + 1);*/
                 data.penjualan = '';
                 data.laba_kotor = '';
                 data.status = $('#caristatus').val();
+                data.progress = $('#cariprogress').val();
             }
         },
  

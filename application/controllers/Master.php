@@ -963,6 +963,7 @@ class Master extends CI_Controller {
                 }
                 $status .= '<li role="presentation"><a role="menuitem" data-toggle="modal" tabindex="-1"  onclick="copy('."'".$query->id."'".','."'".$query->nota."'".')" title="Copy"><i class="fa fa-copy"></i> Copy</a></li>';
                 $status .= '<li role="presentation"><a role="menuitem" data-toggle="modal" tabindex="-1"  onclick="hapus('."'".$query->id."'".','."'".$query->nota."'".')" title="Hapus"><i class="fa fa-times"></i> Hapus</a></li></ul></div>';
+                $row[] = $query->progress;
                 $row[] = $status;
                
             $data[] = $row;

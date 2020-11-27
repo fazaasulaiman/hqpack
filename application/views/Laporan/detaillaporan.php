@@ -168,6 +168,14 @@ tr.shown td.details-control {
                                     </select>
                                   </div>
                                 </div>
+                                <div class="item form-group">
+                                  <label class="control-label col-md-3 col-sm-3 col-xs-12" for="konsumen">Progress
+                                  </label>
+                                  <div class="col-md-6 col-sm-6 col-xs-12">
+                                     <select  class="form-control col-md-7 col-xs-12" id="cariprogress" name="progress" required="required">
+                                   </select>
+                                  </div>
+                                </div>
 
 
                                 
@@ -175,7 +183,7 @@ tr.shown td.details-control {
                                 <div class="ln_solid"></div>
                                   <div class="form-group">
                                     <div class="col-md-6 col-md-offset-3">
-                                       <button type="reset" class="btn btn-default" value="Reset">Reset</button>
+                                       <button type="reset" class="btn btn-default" value="Reset" id="resetfilter">Reset</button>
                                       <a class="btn btn-primary" id="filter">Cari</a>
                                     </div>
                                   </div>
@@ -195,6 +203,7 @@ tr.shown td.details-control {
                                         <th width="20%">Penjualan</th>
                                         <th width="20%">Laba Kotor</th>
                                         <th width="20%">Status</th>
+                                        <th width="20%">Progress</th>
                                         <th width="5%">Aksi</th>
                                     </tr>
                                 </thead>
@@ -214,6 +223,7 @@ tr.shown td.details-control {
                                         <th width="20%">Penjualan</th>
                                         <th width="20%">Laba Kotor</th>
                                         <th width="20%">Status</th>
+                                        <th width="20%">Progress</th>
                                         <th width="5%">Aksi</th>
                                     </tr>
                                 </tfoot>
