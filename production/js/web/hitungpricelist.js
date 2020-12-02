@@ -175,6 +175,7 @@ function detail(id)
    var url = site_url+"Master/detailhitungpl/";
     
             $('#moddetail').modal('show');
+
     $.ajax({
         url : url+id,
         type: "POST",
@@ -196,17 +197,20 @@ function detail(id)
             jQuery.each(body, function(i, val) {
               console.log(i);
               console.log(val);
-                html += '<div class="panel panel-default"><div class="panel-heading">'+i+'</div><table class="table">';
-                html += '<thead><tr><th>Distributor</th><th>Barang</th><th>Harga</th><th>Jumlah</th><th>Total</th></tr></thead><tbody>';
+                html += '<div class="panel panel-default detailed"><div class="panel-heading">'+i+'</div><table class="table">';
+                html += '<thead><tr><th>Distributor</th><th>Barang</th><th>Size</th><th>Ketebalan</th><th>Harga</th><th>Jumlah</th><th>Total</th></tr></thead><tbody>';
                    jQuery.each(val, function(y, value) {
                     html += '<tr><td>'+value.distributor+'</td>';
                     html += '<td>'+value.barangjasa+'</td>';
+                    html += '<td>'+value.size+'</td>';
+                    html += '<td>'+value.ketebalan+'</td>';
                     html += '<td>'+value.harga+'</td>';
                     html += '<td>'+value.jumlah+'</td>';
                     html += '<td>'+value.total+'</td></tr>';
                    });
                 html += '</tbody></table></div>';
             });
+            $('.detailed').remove();
            $('#header').after(html);
               console.log(body);
            $('#subtotaldetail').text(footer.subtotal);

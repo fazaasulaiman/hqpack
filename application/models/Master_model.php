@@ -319,7 +319,7 @@
             $this->db->select('sum( hargadistributor.harga*pricelist_distributor.jumlah) as subtotal');
         }
         if ($type =='tampil') {
-            $this->db->select('hargadistributor.distributor,hargadistributor.barangjasa,hargadistributor.harga,pricelist_distributor.jumlah,pricelist_distributor.jenis');
+            $this->db->select('hargadistributor.distributor,hargadistributor.barangjasa,hargadistributor.size,hargadistributor.ketebalan,hargadistributor.harga,pricelist_distributor.jumlah,pricelist_distributor.jenis');
         }
         $this->db->from('pricelist_distributor');
         $this->db->join('hargadistributor', 'hargadistributor.id = pricelist_distributor.id_hargadistributor');

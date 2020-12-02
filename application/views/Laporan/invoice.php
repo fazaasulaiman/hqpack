@@ -52,7 +52,7 @@ tr.shown td.details-control {
                                     <input type="text" class="form-control col-md-7 col-xs-12 datepicker"  name="tanggal" required="required" readonly="readonly">
                                   </div>
                                 </div>
-                                 <div class="item form-group">
+                                 <div class="item form-group" style="display: none;">
                                   <label class="control-label col-md-3 col-sm-3 col-xs-12" for="nota">Nota<span class="required">*</span>
                                   </label>
                                   <div class="col-md-6 col-sm-6 col-xs-12">
