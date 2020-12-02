@@ -196,6 +196,17 @@
         $query = $this->db->get();
         return $query->result();
     }
+    public function rankLaba(){
+        $this->db->select('konsumen.konsumen, sum(laba_rugi.laba_kotor) as laba');
+        $this->db->from('laba_rugi');
+        $this->db->join('konsumen', 'konsumen.id = laba_rugi.id_konsumen');
+        $this->db->Where('laba_rugi.status','Fix');
+        $this->db->group_by('laba_rugi.id_konsumen');
+        $this->db->order_by('laba','desc');
+        $this->db->limit(10);
+        $query = $this->db->get();
+        return $query->result();
+    }
      public function rankAktivitas(){
         $this->db->select('konsumen.konsumen, count(laba_rugi.id_konsumen) as aktivitas');
         $this->db->from('laba_rugi');

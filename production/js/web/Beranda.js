@@ -24,7 +24,17 @@ function singkat(){
                  html += '<td>'+subval.aktivitas+' X</td></tr>';
                  i++;            
             });
-            $('#aktivitas').append(html);          
+            $('#aktivitas').append(html);      
+            html='';
+            i=0;
+            $.each(val.rank.laba, function( subindex, subval ) {
+
+                  html += '<tr><td><p>'+[i+1]+'. '+subval.konsumen+'</p></td>';
+                 html += '<td>Rp. '+subval.kotor+'</td></tr>';
+                 i++;            
+            });
+            $('#kotor').append(html);          
         });
+
 }
 

@@ -62,6 +62,24 @@
 			</div>
 		</div>
 	</div>
+	<div class="col-md-6">
+		<div class="x_panel tile  overflow_hidden">
+			<div class="x_title">
+				<h2>Peringkat Laba Kotor</h2>
+				<ul class="nav navbar-right panel_toolbox">
+					<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
+					<li><a class="close-link"><i class="fa fa-close"></i></a></li>
+				</ul>
+				<div class="clearfix"></div>
+			</div>
+			<div class="x_content">
+				
+				<table class="tile_info" id="kotor">
+					
+				</table>
+			</div>
+		</div>
+	</div>
 </div>
 
 </div>

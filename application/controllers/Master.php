@@ -1309,6 +1309,7 @@ class Master extends CI_Controller {
 
         $penjualan = $this->Labarugi_model->rankPenjualan();
         $aktivitas = $this->Labarugi_model->rankAktivitas();
+        $labakotor = $this->Labarugi_model->rankLaba();
         $rank = array();
         
         foreach ($penjualan as $val) {
@@ -1321,6 +1322,18 @@ class Master extends CI_Controller {
             }
 
             $rank['penjualan'][] = array('konsumen' => $val->konsumen, 'penjualan' => $val->penjualan );
+            
+        }
+         foreach ($labakotor as $val) {
+             $char1 = explode('.', $val->laba);
+             
+             if (!empty($char1[1]) && $char1[1] != '00') {
+                $val->laba = number_format($val->laba,strlen($char1[1]),',','.');
+            }else{
+                $val->laba = number_format($val->laba,0,'','.'); 
+            }
+
+            $rank['laba'][] = array('konsumen' => $val->konsumen, 'kotor' => $val->laba);
             
         }
         $rank['aktivitas'] = $aktivitas;
