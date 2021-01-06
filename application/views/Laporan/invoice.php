@@ -76,18 +76,28 @@ tr.shown td.details-control {
                                     </select>
                                   </div>
                                 </div>
-                                <div class="item form-group">
+                                <!-- <div class="item form-group">
                                   <label class="control-label col-md-3 col-sm-3 col-xs-12" for="konsumen">Tanggal payment<span class="required">*</span>
                                   </label>
                                   <div class="col-md-6 col-sm-6 col-xs-12">
                                     <input type="text" class="form-control col-md-7 col-xs-12 datepicker"  name="tanggal_payment"  readonly="readonly" disabled id="tanggal_payment">
                                   </div>
-                                </div>
+                                </div> -->
                                 <div class="item form-group">
                                   <label class="control-label col-md-3 col-sm-3 col-xs-12" for="konsumen">Tanggal deadline
                                   </label>
                                   <div class="col-md-6 col-sm-6 col-xs-12">
                                     <input type="text" class="form-control col-md-7 col-xs-12 datepicker"  name="tanggal_deadline"  readonly="readonly"  id="tanggal_deadline" required="required">
+                                  </div>
+                                </div>
+                                <div class="item form-group">
+                                  <label class="control-label col-md-3 col-sm-3 col-xs-12" for="konsumen">Down Payment 1
+                                  </label>
+                                  <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <div class="input-group">
+                                      <span class="input-group-addon">Rp</span>
+                                      <input type="text" class="form-control col-md-7 col-xs-12" id="dp1" name="dp1">
+                                    </div>
                                   </div>
                                 </div>
                                 <div class="item form-group">

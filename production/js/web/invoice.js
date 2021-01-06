@@ -39,6 +39,10 @@ $(".datepicker").datepicker({
          }
 
     });
+    $('#dp1').keyup(function(){
+      var rp = formatRupiah($(this).val(), "Rp. ");
+          $(this).val(rp)
+    });
     $("#harga,#qty").keyup(function(){
 
         // Getting the current value of textarea

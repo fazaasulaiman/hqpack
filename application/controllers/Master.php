@@ -1362,6 +1362,10 @@ class Master extends CI_Controller {
                 }
         
                 $trx = $data['trx'];
+                if (!empty($data['dp1'])) {
+                    $dp1 = $data['dp1'];
+                    unset($data['dp1']);
+                }
                 unset($data['trx'],$data['harga'],$data['qty'],$data['barang']);
                 $data['tanggal'] =  date("Y-m-d", strtotime($data['tanggal']));
                 $data['total'] = str_replace(',','.',$data['total']);
@@ -1371,6 +1375,9 @@ class Master extends CI_Controller {
                     $data['tanggal_payment'] =  date("Y-m-d", strtotime($data['tanggal_payment']));
                 }
                 $this->Master_model->tambah($data,$tabel);
+                $invoice = $this->Master_model->get($this->db->insert_id(),'invoice');
+                
+                $data['nota'] = $invoice->nota;
                 foreach ($trx as $item) {
                     $items['tanggal'] = $data['tanggal'];
                     $items['nota'] = $data['nota'];
@@ -1381,7 +1388,14 @@ class Master extends CI_Controller {
                     $items['penjualan'] = str_replace(',','.', $item['penjualan']);
                     $this->Master_model->tambah($items,'laba_rugi');
                 }
-                
+                if (!empty($dp1)) {
+                    $ti['nota'] = $data['nota'];
+                    $ti['kredit'] = str_replace('.','', $dp1);
+                    $ti['tanggal'] = $data['tanggal'];
+                    $ti['keterangan'] = 'Down Payment 1';
+                  
+                    $this->Master_model->tambah($ti,'transaksiinvoice');
+                }
                 echo json_encode(array("status" => TRUE));
                 exit(); 
         } catch (Exception $e) {
