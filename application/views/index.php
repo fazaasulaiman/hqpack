@@ -167,6 +167,15 @@
                   <li class="">
                      <a href="<?php echo base_url()?>Master/invoice">POS</a>
                  </li>
+                 <li class="">
+                     <a href="<?php echo base_url()?>Master/pricelist#view">Price List</a>
+                 </li>
+                 <li class="">
+                     <a href="<?php echo base_url()?>Master/inventaris#view">Inventaris</a>
+                 </li>
+                 <li class="">
+                     <a href="<?php echo base_url()?>Master/stock#view">Stock</a>
+                 </li>
                 
               </ul>
               <ul class="nav navbar-nav pull-right">

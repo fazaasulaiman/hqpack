@@ -43,6 +43,14 @@ $(document).on("click",".hpskirim",function(e){
        
     });
 $(document).ready(function() {
+  var hash = window.location.hash.substring(1); //get the string after the hash
+  console.log(hash);
+  if(hash =='view'){
+     $('#panelone').remove();
+     $("#headingTwo").removeClass( "collapsed" );
+     $("#collapseTwo").attr('class', 'panel-collapse collapse in');
+     $("#headingTwo,#collapseTwo").attr("aria-expanded", "true");
+  }
  $('button').tooltip({
   trigger: 'click',
   placement: 'right'

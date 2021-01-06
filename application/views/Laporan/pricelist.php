@@ -37,7 +37,7 @@ tr.shown td.details-control {
 
                     <!-- start accordion -->
                     <div class="accordion" id="accordion" role="tablist" aria-multiselectable="true">
-                      <div class="panel">
+                      <div class="panel" id="panelone">
                         <a class="panel-heading" role="tab" id="headingOne" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
                           <h4 class="panel-title">Form Price List</h4>
                         </a>

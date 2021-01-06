@@ -3,7 +3,15 @@ var checksum, total = 0
 
 
 $(document).ready(function() {
-
+ 
+ var hash = window.location.hash.substring(1); //get the string after the hash
+ console.log(hash);
+if(hash =='view'){
+   $('#panelone').remove();
+   $("#headingTwo").removeClass( "collapsed" );
+   $("#collapseTwo").attr('class', 'panel-collapse collapse in');
+   $("#headingTwo,#collapseTwo").attr("aria-expanded", "true");
+}
 $("button[type='reset']").closest('form').on('reset', function(event) {
 console.log('masuk')
 $('#statusfilter').val('').trigger('change')
@@ -11,7 +19,6 @@ $('#statusfilter').val('').trigger('change')
 new ClipboardJS('#buttoncopy');
   var s2 = ["produk_konsumen", "barangjasa", "size","warna","bahan","ketebalan"];
      s2.forEach(myFunction);
- 
   
 
 
