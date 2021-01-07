@@ -191,6 +191,28 @@ function hapus(id,ket){
   }
     
 }
+function duplikat(id,ket){
+      if(confirm('apakah anda ingin menduplikat data no '+ket)){
+    var url = site_url+"Master/duplikatpricelist/";
+  $.ajax({
+        url : url+id,
+        type: "POST",
+        dataType: "JSON",
+        success: function(data)
+        {   
+            
+             if(data.status){
+                berhasil();
+               table.ajax.reload(null,false);
+            } 
+        }
+     });
+  } 
+  else {
+    return false;
+  }
+    
+}
 function myFunction(value) {
   if (value == 'bahan') {
       value = 'barangjasa';

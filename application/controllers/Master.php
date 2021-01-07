@@ -1694,7 +1694,8 @@ class Master extends CI_Controller {
                 $row[] = $query->note;
                
                 $row[] = '<div class="btn-group"><a class="btn btn-primary dropdown-toggle btn-sm" data-toggle="dropdown" href="#"><i class="fa fa-cog"></i> <span class="caret"></span></a><ul role="menu" class="dropdown-menu pull-right">
-                <li role="presentation"><a role="menuitem" data-toggle="modal" tabindex="-1"  onclick="perhitungan('."'".$query->produk_konsumen."'".','."'".$query->nama_produk."'".','."'".$query->warna."'".','."'".$query->id."'".')" title="perhitungan"><i class="fa fa-percent" aria-hidden="true"></i> hitung</a></li><li role="presentation"><a role="menuitem" tabindex="-1"  onclick="copyboard('."'".$query->id."'".')"  data-toggle="modal" title="copyboard"><i class="fa fa-clipboard "></i> Copyboard</a></li><li role="presentation"><a role="menuitem" tabindex="-1"  onclick="edit('."'".$query->id."'".')"  data-toggle="modal" href="#edit" title="Ubah"><i class="fa fa-edit"></i> Ubah</a></li><li role="presentation"><a role="menuitem" data-toggle="modal" tabindex="-1"  onclick="hapus('."'".$query->id."'".','."'".$no."'".')" title="Hapus"><i class="fa fa-times"></i> Hapus</a></li></ul></div>
+                <li role="presentation"><a role="menuitem" data-toggle="modal" tabindex="-1"  onclick="perhitungan('."'".$query->produk_konsumen."'".','."'".$query->nama_produk."'".','."'".$query->warna."'".','."'".$query->id."'".')" title="perhitungan"><i class="fa fa-percent" aria-hidden="true"></i> hitung</a></li><li role="presentation"><a role="menuitem" tabindex="-1"  onclick="copyboard('."'".$query->id."'".')"  data-toggle="modal" title="copyboard"><i class="fa fa-clipboard "></i> Copyboard</a></li><li role="presentation"><a role="menuitem" tabindex="-1"  onclick="edit('."'".$query->id."'".')"  data-toggle="modal" href="#edit" title="Ubah"><i class="fa fa-edit"></i> Ubah</a></li><li role="presentation"><a role="menuitem" data-toggle="modal" tabindex="-1"  onclick="hapus('."'".$query->id."'".','."'".$no."'".')" title="Hapus"><i class="fa fa-times"></i> Hapus</a></li>
+                    <li role="presentation"><a role="menuitem" data-toggle="modal" tabindex="-1"  onclick="duplikat('."'".$query->id."'".','."'".$no."'".')" title="Duplicat"><i class="fa fa-clone"></i> Duplikat</a></li></ul></div>
                       ';
             $data[] = $row;
         }
@@ -1801,6 +1802,37 @@ class Master extends CI_Controller {
         $tabel='price_list';
         $this->Master_model->hps($id,$tabel);
         echo json_encode(array("status" => TRUE));
+        
+    }
+      public function duplikatpricelist($id)
+    {
+        
+        $pricelist = $this->Master_model->get($id,'price_list');
+        unset($pricelist->id,$pricelist->updated_on,$pricelist->created_on);
+        
+        $this->Master_model->tambah($pricelist,'price_list');
+        $pricelistId =  $this->db->insert_id();
+        $plorder = $this->Master_model->gettemplate(array('id_pricelist' => $id),'pricelist_order',1);
+        if (!empty($plorder)) {
+           foreach ($plorder as $key ) {
+                $exist = $this->Master_model->gettemplate(array('id_pricelist' => $id,'id_plorder' => $key->id),'pricelist_distributor',1);
+
+                unset($key->id,$key->updated_on,$key->created_on,$key->id_pricelist);
+                $key->id_pricelist =  $pricelistId;
+                $this->Master_model->tambah($key,'pricelist_order');
+                $pldistributorId =  $this->db->insert_id();
+                if (!empty($exist)) {
+                    foreach ($exist as $plkey) {
+                         unset($plkey->id,$plkey->updated_on,$plkey->created_on,$plkey->id_pricelist,$plkey->id_plorder);
+                         $plkey->id_pricelist =  $pricelistId;
+                         $plkey->id_plorder =  $pldistributorId;
+                         $this->Master_model->tambah($plkey,'pricelist_distributor');
+                    }
+                }
+            }
+        }
+        echo json_encode(array("status" => TRUE));
+        exit(); 
         
     }
      public function runpricelistorder($id)
