@@ -230,7 +230,7 @@ tr.shown td.details-control {
                             <table id="table" class="table table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
                                 <thead>
                                     <tr>
-                                        
+                                        <th width="5%"></th>
                                         <th width="5%">No</th>
                                         <th width="20%">Tanggal</th>
                                         <th width="20%">Nota</th>
@@ -247,7 +247,7 @@ tr.shown td.details-control {
                                 </tbody>
                                 <tfoot>
                                     <tr>
-                                        
+                                       <th width="5%"></th>
                                         <th width="5%">No</th>
                                         <th width="20%">Tanggal</th>
                                         <th width="20%">Nota</th>
@@ -361,6 +361,101 @@ tr.shown td.details-control {
                         <div class="modal-footer">
                           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                           <a class="btn btn-primary" id="validate2">Submit</a>
+                          
+                        </div>
+
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+<div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" id="modubahitem" aria-hidden="true">
+                    <div class="modal-dialog modal-lg">
+                      <div class="modal-content">
+
+                        <div class="modal-header">
+                          <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
+                          </button>
+                          <h4 class="modal-title" id="myModalLabel">Ubah Beban</h4>
+                        </div>
+                        <div class="modal-body">
+                          <form action="#" id="formubahitem" class="form-horizontal" data-parsley-validate>
+                          <input type="hidden" name="<?=$this->security->get_csrf_token_name();?>" value="<?=$this->security->get_csrf_hash();?>" style="display: none">
+                          <input name="id" id="iditem" type="hidden">
+                          <input name="id_konsumen" id="konsumenitemup" type="hidden">
+                                <div class="item form-group">
+                                  <label class="control-label col-md-3 col-sm-3 col-xs-12" for="Tanggal">Tanggal<span class="required">*</span>
+                                  </label>
+                                  <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <input id="tanggalitemup" class="form-control col-md-7 col-xs-12 datepicker" required="required" name="tanggal" readonly="readonly" type="text">
+                                  </div>
+                                </div>
+                                <div class="item form-group">
+                                  <label class="control-label col-md-3 col-sm-3 col-xs-12" for="nota">Nota<span class="required">*</span>
+                                  </label>
+                                  <div class="col-md-6 col-sm-6 col-xs-12">
+                                     <input id="notaitemup" type="text" name="nota" disabled="disabled" class="form-control col-md-7 col-xs-12" minlength="2"></input>
+                                  </div>
+                                </div>
+                                
+                                <!--  <div class="item form-group">
+                                  <label class="control-label col-md-3 col-sm-3 col-xs-12" for="konsumen">Konsumen<span class="required">*</span>
+                                  </label>
+                                  <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <select class="form-control col-md-7 col-xs-12" id="konsumenup" name="id_konsumen" required="required">
+                                    </select>
+                                  </div>
+                                </div> -->
+                                <div class="item form-group">
+                                  <label class="control-label col-md-3 col-sm-3 col-xs-12" for="barang">Barang 
+                                    <span class="required">*</span>
+                                  </label>
+                                  <div class="col-md-6 col-sm-6 col-xs-12">
+                                   <input type="text" class="form-control col-md-7 col-xs-12" id="barangitemup" name="barang" required="required">
+                                  </div>
+                                </div>
+                                <div class="item form-group">
+                                  <label class="control-label col-md-3 col-sm-3 col-xs-12" for="qty">Qty
+                                    <span class="required">*</span>
+                                  </label>
+                                  <div class="col-md-6 col-sm-6 col-xs-12">
+                                   <div class="input-group">
+                                      <span class="input-group-addon">Rp</span>
+                                      <input id="qtyitemup" type="text" class="form-control col-md-7 col-xs-12" data-parsley-type="integer" name="qty" required="required">
+                                      </input>
+                                    </div>
+                                  </div>
+                                </div>
+                                  <div class="item form-group">
+                                  <label class="control-label col-md-3 col-sm-3 col-xs-12" for="harga">Harga
+                                    <span class="required">*</span>
+                                  </label>
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                     <div class="input-group">
+                                        <span class="input-group-addon">Rp</span>
+                                        <input id="hargaitemup" type="text" class="form-control col-md-7 col-xs-12"  name="harga" required="required">
+                                        </input>
+                                      </div>
+                                    </div>
+                                  </div>
+                                <div class="item form-group">
+                                  <label class="control-label col-md-3 col-sm-3 col-xs-12" for="penjualan">Penjualan
+                                    <span class="required">*</span>
+                                  </label>
+                                  <div class="col-md-6 col-sm-6 col-xs-12">
+                                   <div class="input-group">
+                                      <span class="input-group-addon">Rp</span>
+                                      <input id="penjualanitemup" type="text" class="form-control col-md-7 col-xs-12" name="penjualan" readonly="readonly" required="required">
+                                      </input>
+                                    </div>
+                                  </div>
+                                </div>
+                              </form>
+
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                          <a class="btn btn-primary" id="validateitem">Submit</a>
                           
                         </div>
 

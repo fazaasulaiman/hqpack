@@ -993,7 +993,7 @@ class Master extends CI_Controller {
     $this->load->library('user_agent');  
         if($this->session->userdata('LOGIN')=='TRUE' && $this->session->userdata('LEVEL')==2 ){
 
-            if ($this->agent->referrer()== base_url().'Master/detaillaporan' && !empty($nota)) {
+            if (($this->agent->referrer()== base_url().'Master/detaillaporan' or $this->agent->referrer()== base_url().'Master/invoice') && !empty($nota)) {
                 $data['view'] = 'Laporan/hpp';
                 $data['js'] = base_url().'production/js/web/hpp.js'; 
                 $this->load->view('index',$data);
@@ -1418,7 +1418,7 @@ class Master extends CI_Controller {
             foreach ($list as $query) {
                 $no++;
                 $row = array();
-               
+                $row[] = '';
                 $row[] = $no;
               
                 $row[] = date("d M Y",  strtotime($query->tanggal));
@@ -2403,5 +2403,71 @@ class Master extends CI_Controller {
         $this->Master_model->hpstemplate($arr,$tabel);
         echo json_encode(array("status" => TRUE));
         
-    }      
+    } 
+    public function detailItem($nota){
+        $items = $this->Master_model->gettemplate(array('nota'=>$nota),'laba_rugi',1);
+        $data = array();
+        foreach ($items as $query) {
+               
+                $row = array();
+               
+              
+                $row[] = $query->barang;
+                $char1 = explode('.', $query->hpp);
+                 if (!empty($char1[1]) && $char1[1] != '00' ) {
+                    $row[] = number_format($query->hpp,strlen($char1[1]),',','.');
+                    $total = $query->penjualan - $query->hpp;
+                     $tempkotor = number_format($total,2,',','.');
+                   /* $tempkotor =  number_format($query->penjualan - $query->hpp,strlen($char1[1]),',','.');*/
+                }else{
+                    $row[] = number_format($query->hpp,0,'','.'); 
+                     $total = $query->penjualan - $query->hpp;
+                    $tempkotor =  number_format($total,2,',','.');
+                }
+
+                if (!empty($char1[1]) && $char1[1] != '00' ) {
+                    $kotor =  number_format($query->laba_kotor,2,',','.');
+                }else{
+                    $kotor =  number_format($query->laba_kotor,0,'','.');
+                 
+                }
+
+
+                
+
+                $row[] = number_format($query->qty,0,'','.');
+                 $harga = explode('.', $query->harga);
+                 if (!empty($harga[1]) && $harga[1] != '00' ) {
+                    $row[] = number_format($query->harga,strlen($harga[1]),',','.');
+                  
+                }else{
+                    $row[] = number_format($query->harga,0,'','.'); 
+                }
+               /* $row[] = number_format($query->harga,0,'','.');
+                $row[] = number_format($query->penjualan,0,'','.');*/
+                
+                 $penjualan = explode('.', $query->penjualan);
+                 if (!empty($penjualan[1]) && $penjualan[1] != '00' ) {
+                    $row[] = number_format($query->penjualan,strlen($penjualan[1]),',','.');
+                  
+                }else{
+                    $row[] = number_format($query->penjualan,0,'','.'); 
+                }
+                $row[] = $query->status != 'Edit'? $kotor : $tempkotor;
+                $row[] = $query->status =='Edit' ? '<a href="#" onclick="fix('."'".$query->id."'".','."'".$query->nota."'".')"><span class="label label-warning">Edit</span></a>' : '<span class="label label-success">Fix</span>' ;
+                $status = '<div class="btn-group"><a class="btn btn-primary dropdown-toggle btn-sm" data-toggle="dropdown" href="#"><i class="fa fa-cog"></i> <span class="caret"></span></a><ul role="menu" class="dropdown-menu pull-right">';
+                if ($query->status == 'Edit') {
+                    $status .= '<li role="presentation"><a role="menuitem" data-toggle="modal" tabindex="-1"  onclick="hpp('."'".$query->id."'".','."'".$query->nota."'".')" title="HPP"><i class="fa fa-cart-plus"></i> HPP</a></li><li role="presentation"><a role="menuitem" tabindex="-1"  onclick="edititem('."'".$query->id."'".')"  data-toggle="modal" href="#edit" title="Ubah"><i class="fa fa-edit"></i> Ubah</a></li>';
+                }
+                if ($query->status == 'Fix') {
+                    $status .= '</li><li role="presentation"><a role="menuitem" tabindex="-1"  onclick="history('."'".$query->id."'".','."'".$query->nota."'".')"  title="History"><i class="fa fa-history "></i> History</a></li>';
+                }
+                $status .= '<li role="presentation"><a role="menuitem" data-toggle="modal" tabindex="-1"  onclick="copy('."'".$query->id."'".','."'".$query->nota."'".')" title="Copy"><i class="fa fa-copy"></i> Copy</a></li>';
+                $status .= '<li role="presentation"><a role="menuitem" data-toggle="modal" tabindex="-1"  onclick="hapusitem('."'".$query->id."'".','."'".$query->nota."'".')" title="Hapus"><i class="fa fa-times"></i> Hapus</a></li></ul></div>';
+                $row[] = $status;
+               
+            $data[] = $row;
+        }
+        echo json_encode($data);
+    }     
 }

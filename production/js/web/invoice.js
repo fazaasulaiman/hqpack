@@ -1,3 +1,30 @@
+function format (d) {
+ 
+    var rowId = d[3];
+   
+    var html='<table id="#'+rowId+'" class="table table-striped dt-responsive nowrap" style="width:100%">'+
+        '<thead><tr><th>Barang</th><th>HPP</th><th>Qty</th><th>Harga</th><th>Penjualan</th>'+
+        '<th>Laba Kotor</th><th>Status</th><th>Aksi</th></tr></thead><tbody>';
+        $.ajaxSetup({async: false});
+     $.get(site_url+'Master/detailItem/'+rowId, function(data) {
+     
+        jQuery.each(JSON.parse(data), function() {
+          
+          html += '<tr><td>'+this[0]+'</td>';
+          html += '<td>'+this[1]+'</td>';
+          html += '<td>'+this[2]+'</td>';
+          html += '<td>'+this[3]+'</td>';
+          html += '<td>'+this[4]+'</td>';
+          html += '<td>'+this[5]+'</td>';
+          html += '<td>'+this[6]+'</td>';
+          html += '<td>'+this[7]+'</td></tr>';
+        });
+        
+    });
+     html += '</tbody></table>';
+     return html;   
+            
+}
 var param1,param2 = 1;
 var checksum, total = 0
 $(document).on('change', '#statusupdate', function() {
@@ -18,6 +45,23 @@ $("button[type='reset']").closest('form').on('reset', function(event) {
 console.log('masuk')
 $('#statusfilter').val('').trigger('change')
 });
+$("#hargaitemup,#qtyitemup").keyup(function(){
+
+        // Getting the current value of textarea
+
+
+        var value = $(this).attr("name");
+        console.log($(this).val());
+        console.log($(this).attr("name"));
+        var hasil = perkalian($(this).val(),$(this).attr("name"));
+         if ($(this).attr("id") == 'hargaitemup') {
+          //$(this).val($(this).val().toLocaleString('id'));
+          var rp = formatRupiah($(this).val(), "Rp. ");
+          $(this).val(rp)
+        }
+        $('#penjualanitemup').val(hasil)
+
+    });
 setInterval(check, 5000);
 $(".datepicker").datepicker({
     
@@ -178,10 +222,10 @@ $(".datepicker").datepicker({
         //Set column definition initialisation properties.
         "columnDefs": [
             { 
-           
-            "targets": [ 0 ], //first column / numbering column
-            "orderable": false, //set not orderable
-           
+           "class":          "details-control",
+        "targets": [ 0 ], //first column / numbering column
+        "orderable": false, //set not orderable
+        'defaultContent': ''
             },
         ],
          rowCallback: function(row, data, index){
@@ -239,6 +283,21 @@ $(".datepicker").datepicker({
 */        
 
     });
+   $('#table tbody').on('click', 'td.details-control', function () {
+        var tr = $(this).closest('tr');
+        var row = table.row( tr );
+ 
+        if ( row.child.isShown() ) {
+            // This row is already open - close it
+            row.child.hide();
+            tr.removeClass('shown');
+        }
+        else {
+            // Open this row
+            row.child( format(row.data()) ).show();
+            tr.addClass('shown');
+        }
+    } );
  //setInterval(check, 5000);
 
   var hash = window.location.hash.substring(1); //get the string after the hash
@@ -267,6 +326,15 @@ $('#validate2').click(function () {
       gagal();
     }
 });
+$('#validateitem').click(function () {
+    if ( $('#formubahitem').parsley().validate()){
+        updateitem();
+    }
+    else
+    {
+      gagal();
+    }
+});
 function perkalian(qty,harga){
 
   harga = harga.split('.').join('').replace(',','.');
@@ -280,18 +348,7 @@ function nota(){
  today = Math.round((new Date()).getTime()/1000);
  $("#nota").val(today);
 }
-function format (d) {
- 
-     var rowId = d[3];
-    // `d` is the original data object for the row
-    //row.child('<table id="#'+rowId+'" class="table table-striped child_table dt-responsive"><thead><tr><th>No</th><th>Nota</th><th>Tanggal</th><th>Distributor</th><th>Barang</th><th>Qty</th><th>Harga</th><th>Jumlah</th><th>Aksi</th></tr></thead><tbody></tbody></table>').show();
 
-    return '<table id="#'+rowId+'" class="table table-striped dt-responsive nowrap" style="width:100%">'+
-        '<thead><tr><th>No</th><th>Nota</th><th>Tanggal</th><th>Distributor</th><th>Barang</th><th>Qty</th><th>Harga</th><th>Jumlah</th><th>Aksi</th></tr></thead><tbody></tbody></table>';
-        
-      
-          
-}
 function save(){
     $('#send').text('Submit...'); //change button text
     $('#send').attr('disabled'); //set button enable 
@@ -864,4 +921,141 @@ url: site_url+"Master/checktable/invoice",
         }
 })
 
+}
+function copy(id,nota){
+      if(confirm('ingi menyalin data nota ini "'+nota+'" ke follow up')){
+    
+        
+        window.open(site_url+"Master/followup/"+id, '_blank');
+  } 
+
+  else {
+    return false;
+  }
+    
+}
+function hpp(id_labarugi,nota){
+      if(confirm('ingi menambahkan hpp di nota ini "'+nota+'"')){
+    
+        
+        window.open(site_url+"Master/hpp/"+nota+'_'+id_labarugi, '_blank');
+  } 
+
+  else {
+    return false;
+  }
+    
+}
+function history(id_labarugi,nota){
+      if(confirm('ingi melihat history hpp di nota ini "'+nota+'"')){
+    
+        
+        window.open(site_url+"Master/historyhpp/"+nota+'_'+id_labarugi, '_blank');
+  } 
+
+  else {
+    return false;
+  }
+    
+}
+function hapusitem(id,ket){
+      if(confirm('apakah ada yakin ingin menghapus data ini "'+ket+'"')){
+    var url = site_url+"Master/hpslabarugi/";
+  $.ajax({
+        url : url+id,
+        type: "POST",
+        dataType: "JSON",
+        success: function(data)
+        {   
+            
+             if(data.status){
+                berhasil();
+               table.ajax.reload(null,false);
+            } 
+        }
+     });
+  } 
+  else {
+    return false;
+  }
+    
+}
+function edititem(id)
+{
+   var url = site_url+"Master/getlabarugi/";
+    $('#formubahitem')[0].reset(); // reset form on modals
+   //Ajax Load data from ajax
+  
+    $.ajax({
+        url : url+id,
+        type: "POST",
+        dataType: "JSON",
+        success: function(data)
+        { 
+            $('#iditem').val(data.id);
+            $('#tanggalitemup').val(data.tanggal);
+            $('#notaitemup').val(data.nota);
+            ;
+            $('#konsumenitemup').val(data.id_konsumen);
+            /*s2.append($('<option>').val(data.id_konsumen).text(data.konsumen));*/
+            //s2.val(data.konsumen).trigger("change");
+            param1 = (+data.qty);
+            param2 = (+data.harga);
+            $('#barangitemup').val(data.barang);
+            $('#hargaitemup').val(data.harga);
+            $('#qtyitemup').val(data.qty);
+            $('#penjualanitemup').val(data.penjualan);
+            $('#modubahitem').modal('show'); // show bootstrap modal when complete loaded
+            $('.modal-title').text('Edit Data'); // Set title to Bootstrap modal title
+       
+            
+        },
+        error: function (jqXHR, textStatus, errorThrown)
+        {
+            alert('Error get data from ajax');
+        },
+    });
+}
+function updateitem(){
+    $('#validateitem').text('Submit...'); //change button text
+    $('#validateitem').attr('disabled'); //set button enable 
+
+
+ $.ajax({
+        context: this,
+        url: site_url+"Master/uplabarugi",
+        type: "POST",
+        data: $('#formubahitem').serialize(),
+        dataType: "JSON",
+        success: function(data)
+        {
+            if(data.status) //if success close modal 
+            {
+                berhasil();
+                $('#modubahitem').modal('hide');
+                $('#validateitem').text('Submit'); 
+                $('#validateitem').attr('disabled',false);
+                table.ajax.reload(null,false);
+                
+            }
+            $('#validateitem').text('Submit'); //change button text
+            $('#validateitem').attr('disabled',false); //set button enable 
+
+
+        },
+        error: function (jqXHR, textStatus, errorThrown)
+        {
+           info('data tidak boleh sama');
+            $('#validateitem').text('Submit'); //change button text
+            $('#validateitem').attr('disabled',false); //set button enable 
+
+        }
+    });
+}
+function perkalian(val,param){
+
+  param=='qty' ? param1 = val : param2 = val.split(".").join("");
+  var jumlah = param1*param2;
+  return jumlah.toLocaleString('id');
+  
 }
