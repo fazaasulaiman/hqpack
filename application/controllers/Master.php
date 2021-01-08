@@ -1441,7 +1441,7 @@ class Master extends CI_Controller {
                  $status .= '<li role="presentation"><a role="menuitem" data-toggle="modal" tabindex="-1"  onclick="transaksiinvoice('."'".$query->nota."'".')" title="Copy"><i class="fa fa-calculator"></i> Billing</a></li>';
                 //$status .= '<li role="presentation"><a role="menuitem" data-toggle="modal" tabindex="-1"  onclick="detail('."'".$query->id."'".','."'".$query->nota."'".')" title="Copy"><i class="fa fa-info"></i> Detail</a></li>';
                 $status .= '<li role="presentation"><a role="menuitem" data-toggle="modal" tabindex="-1"  onclick="print('."'".$query->id."'".','."'".$query->nota."'".','."'pdf'".')" title="print"><i class="fa fa-print""></i> Print</a></li>';
-                $status .= '<li role="presentation"><a role="menuitem" data-toggle="modal" tabindex="-1"  onclick="print('."'".$query->id."'".','."'".$query->nota."'".','."'image'".')" title="image"><i class="fa fa-picture-o""></i> Gambar</a></li>';
+               /* $status .= '<li role="presentation"><a role="menuitem" data-toggle="modal" tabindex="-1"  onclick="print('."'".$query->id."'".','."'".$query->nota."'".','."'image'".')" title="image"><i class="fa fa-picture-o""></i> Gambar</a></li>';*/
                 $status .= '<li role="presentation"><a role="menuitem" data-toggle="modal" tabindex="-1"  onclick="hpsinvoice('."'".$query->id."'".','."'".$query->nota."'".')" title="Hapus"><i class="fa fa-times"></i> Hapus</a></li></ul></div>';
                 $row[] = $status;
                

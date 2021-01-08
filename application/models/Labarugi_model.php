@@ -4,7 +4,7 @@
  class Labarugi_model extends CI_Model {
  	 var $table = 'followup';
  	 var $column_order = array(null,'tanggal','nota','konsumen','barang','hpp','qty','harga','penjualan','laba_kotor','status','progress'); 
-     var $column_search = array('tanggal','nota','konsumen','barang','hpp','qty','harga','penjualan','laba_kotor','status','progress'); 
+     var $column_search = array('laba_rugi.tanggal','laba_rugi.nota','konsumen.konsumen','laba_rugi.barang','laba_rugi.hpp','laba_rugi.qty','laba_rugi.harga','laba_rugi.penjualan','laba_rugi.laba_kotor','invoice.status'); 
      var $order = array('id' => 'desc'); 
         	public function __construct() {
                 parent::__construct();
@@ -51,7 +51,7 @@
                      // open bracket. query Where with OR clause better with bracket. because maybe can combine with other WHERE with AND.
                     if (!empty($_POST[$item])) {
                         $tgl = explode('|',$_POST[$item]);
-                        $this->db->where("DATE(tanggal) BETWEEN '$tgl[0]' and '$tgl[1]'");
+                        $this->db->where("DATE(laba_rugi.tanggal) BETWEEN '$tgl[0]' and '$tgl[1]'");
                     }else{
                      $this->db->like($item, $_POST[$item]);   
                     }
