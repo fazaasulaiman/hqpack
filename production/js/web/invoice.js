@@ -619,7 +619,7 @@ var dd = {
         {
             style: 'section',
             table: {
-                widths: ['4%','*','*','20%','*' ],
+                widths: ['4%','50%','15%','15%','*' ],
                 body:items
                 
             },
