@@ -4,7 +4,7 @@
  class Labarugi_model extends CI_Model {
  	 var $table = 'followup';
  	 var $column_order = array(null,'tanggal','nota','konsumen','barang','hpp','qty','harga','penjualan','laba_kotor','status','progress'); 
-     var $column_search = array('laba_rugi.tanggal','laba_rugi.nota','konsumen.konsumen','laba_rugi.barang','laba_rugi.hpp','laba_rugi.qty','laba_rugi.harga','laba_rugi.penjualan','laba_rugi.laba_kotor','invoice.status'); 
+     var $column_search = array('tanggal','nota','konsumen','barang','hpp','qty','harga','penjualan','laba_kotor','status','progress'); 
      var $order = array('id' => 'desc'); 
         	public function __construct() {
                 parent::__construct();
@@ -32,7 +32,17 @@
                 if($i===0) // first loop
                 {
                     $this->db->group_start(); // open bracket. query Where with OR clause better with bracket. because maybe can combine with other WHERE with AND.
-                    $this->db->like($item, $_POST['search']['value']);
+                    $this->db->like('laba_rugi.tanggal', $_POST['search']['value']);
+                }elseif ($item == 'nota') {
+
+                    $this->db->like('laba_rugi.nota',  $_POST['search']['value']); 
+                }
+                elseif ($item == 'status') {
+
+                    $this->db->where('laba_rugi.status', $_POST['search']['value']); 
+                }elseif ($item == 'progress') {
+
+                    $this->db->where('invoice.status',  $_POST['search']['value']); 
                 }
                 else
                 {
@@ -56,6 +66,9 @@
                      $this->db->like($item, $_POST[$item]);   
                     }
                     
+                }elseif ($item == 'nota') {
+
+                    $this->db->like('laba_rugi.nota', $_POST[$item]); 
                 }
                 elseif ($item == 'status') {
 
@@ -63,8 +76,7 @@
                 }elseif ($item == 'progress') {
 
                     $this->db->where('invoice.status', $_POST[$item]); 
-                }
-                else{
+                }else{
                     $this->db->like($item, $_POST[$item]);
                 }
 

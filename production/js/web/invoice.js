@@ -231,8 +231,8 @@ $(".datepicker").datepicker({
          rowCallback: function(row, data, index){
           
          
-          if (data[6] != null) {
-             var d = new Date(data[6]);
+          if (data[7] != null) {
+             var d = new Date(data[7]);
                 if(Date.now() >= d){
                 /*$('td', row).css('background-color', '#fc0349');*/
                  $(row).addClass('blue');
@@ -240,8 +240,8 @@ $(".datepicker").datepicker({
                 $(row);
               }
           }
-           if (data[7] != null) {
-             var d = new Date(data[7]);
+           if (data[8] != null) {
+             var d = new Date(data[8]);
                 if(Date.now() >= d){
                 /*$('td', row).css('background-color', '#fc0349');*/
                 $(row).removeClass('blue');
@@ -250,7 +250,7 @@ $(".datepicker").datepicker({
                 $(row);
               }
           }
-           if (data[5] == 'Lunas') {
+           if (data[6] == 'Lunas') {
                 $(row).removeClass('red');
                 $(row).removeClass('blue');
                 $(row).addClass('black');
@@ -502,7 +502,7 @@ function readyprint(data,type){
   items.push([{text:'No',fillColor: '#dedede'},{text:'Keterangan',fillColor: '#dedede'},{text:'Qty',fillColor: '#dedede'},{text:'Harga',fillColor: '#dedede'},{text:'Total',fillColor: '#dedede'}]);
   i = 0;
   data.item.forEach(function (item) { 
-           items.push([i+1,item.barang,formatRupiah(item.qty.replace('.',','), "Rp. "),formatRupiah(item.harga.replace('.',','), "Rp. "),formatRupiah(item.penjualan.replace('.',','), "Rp. ")]);
+           items.push([i+1,item.barang,formatRupiah(item.qty.replace('.',','), "Rp. "),formatRupiah(item.harga, "Rp. "),formatRupiah(item.penjualan.replace('.',','), "Rp. ")]);
            i++;
   }); 
   items.push([
@@ -619,7 +619,7 @@ var dd = {
         {
             style: 'section',
             table: {
-                widths: ['4%','*','5%','*','*' ],
+                widths: ['4%','*','*','20%','*' ],
                 body:items
                 
             },

@@ -1751,7 +1751,7 @@ class Master extends CI_Controller {
          if (empty($data->note_konsumen)) {
            $data->note_konsumen = '';
         }
-        $text = $data->nama_produk.', size '.$data->size.', desain: '.$data->warna.', '.$data->bahan.' '.$data->ketebalan.', '.$data->finishing."\n\n";
+        $text = $data->nama_produk.', size '.$data->size.', desain '.$data->warna.', '.$data->bahan.' '.$data->ketebalan.', '.$data->finishing."\n\n";
         $list = $this->Master_model->pricelistorder($tabel,array('column' => 'id_pricelist','value' => $id ));
         
 
