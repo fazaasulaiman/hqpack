@@ -2469,5 +2469,44 @@ class Master extends CI_Controller {
             $data[] = $row;
         }
         echo json_encode($data);
+    }
+    public function user(){
+        if($this->session->userdata('LOGIN')=='TRUE' && $this->session->userdata('LEVEL')==2 ){
+
+            
+               
+                $data['view'] = 'Pengaturan/user';
+                $data['js'] = base_url().'production/js/web/user.js'; 
+                $this->load->view('index',$data);
+            
+        
+        }else{
+            redirect('Beranda','refresh');
+        }
+    }
+    public function changeUser(){
+        $data = $this->input->post();
+        $kode = $this->session->userdata('NAMA');
+        $exist = $this->Master_model->gettemplate(array('kode' => $kode, 'pass' => md5($data['password'])),'kpm' );
+        if (!empty($exist)) {
+           $this->Master_model->update(array('kode' => $kode, 'pass' => md5($data['password'])),array('kode' => $data['username']), 'kpm');
+           $this->session->set_userdata('NAMA', $data['username']);
+           echo json_encode(array('status' => true));
+        }else{
+           echo json_encode(array('status' => false));
+        }
+       
+    }
+    public function changePassword(){
+        $data = $this->input->post();
+        $kode = $this->session->userdata('NAMA');
+        $exist = $this->Master_model->gettemplate(array('kode' => $kode, 'pass' => md5($data['old'])),'kpm' );
+        if (!empty($exist)) {
+           $this->Master_model->update(array('kode' => $kode, 'pass' => md5($data['old'])),array('pass' => md5($data['new1'])), 'kpm');
+           echo json_encode(array('status' => true));
+        }else{
+           echo json_encode(array('status' => false));
+        }
+       
     }     
 }
