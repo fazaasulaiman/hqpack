@@ -6,7 +6,7 @@ $(document).ready(function() {
 var lastSeg = url.substr(url.lastIndexOf('/') + 1);*/
 
 $("#resetfilter").closest('form').on('reset', function(event) {
-  $("#cariprogress").val('').trigger('change');
+  $("#cariprogress").empty().trigger("change");
 });
   
     $("#harga,#qty").keyup(function(){
