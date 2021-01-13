@@ -26,7 +26,7 @@ function format (d) {
             
 }
 var param1,param2 = 1;
-var checksum, total = 0
+var checksum, checksum2,checksum3,total = 0
 $(document).on('change', '#statusupdate', function() {
   if ($(this).val() == 'Pending Payment') {
           $('#tanggal_paymentupdate').attr('disabled',false);
@@ -440,7 +440,7 @@ function hpsinvoice(id,ket){
 function fix(id,ket){
       if(confirm('apakah ada yakin ingin fix hpp nota "'+ket+'"')){
     var url = site_url+"Master/fixlabarugi/";
-    var laba_kotor = penjualan-hpp;
+    
   $.ajax({
         url : url+id,
         dataType: "JSON",
@@ -921,7 +921,72 @@ url: site_url+"Master/checktable/invoice",
         
         }
 })
+$.ajax({
+url: site_url+"Master/checktable/laba_rugi",
+ success: function(data)
+        {
+          
+           json = JSON.parse(data);
+            if(json.status) //if success close modal 
+            {
+              console.log('labarugi: '+json.checksum);
+                if(checksum2 == 0){
+                  checksum2 = json.checksum;
+                }
 
+                if (checksum2 != json.checksum) {
+                  //alert('ada perubahan data sistem akan segera memprosesnya');
+                  checksum2 = json.checksum;
+                  table.ajax.reload(null,false);
+                }
+
+                
+            }
+          
+
+
+        },
+        error: function (jqXHR, textStatus, errorThrown)
+        {
+           info('error dalam check table detail laba rugi');
+           
+
+        
+        }
+})
+$.ajax({
+url: site_url+"Master/checktable/hpp",
+ success: function(data)
+        {
+          
+           json = JSON.parse(data);
+            if(json.status) //if success close modal 
+            {
+              console.log('hpp: '+json.checksum);
+                if(checksum3 == 0){
+                  checksum3 = json.checksum;
+                }
+
+                if (checksum3 != json.checksum) {
+                  //alert('ada perubahan data sistem akan segera memprosesnya');
+                  checksum3 = json.checksum;
+                  table.ajax.reload(null,false);
+                }
+
+                
+            }
+          
+
+
+        },
+        error: function (jqXHR, textStatus, errorThrown)
+        {
+           info('error dalam check table hpp');
+           
+
+        
+        }
+})
 }
 function copy(id,nota){
       if(confirm('ingi menyalin data nota ini "'+nota+'" ke follow up')){
