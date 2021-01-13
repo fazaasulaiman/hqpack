@@ -1,4 +1,27 @@
 var tgl;
+function format (d) {
+ 
+    var rowId = d[3].replace('<span class="nota-text">', "").replace('</span> &nbsp<a class="btn btn-round btn-warning btn-xs copyboard">Copy</a>','');
+   
+    var html='<table id="#'+rowId+'" class="table table-striped dt-responsive nowrap" style="width:100%">'+
+        '<thead><tr><th>Barang</th><th>Order</th><th>Kirim</th><th>Sisa</th><th>Note</th></tr></thead><tbody>';
+     $.ajaxSetup({async: false});
+     $.get(site_url+'Master/detailSend/'+rowId, function(data) {
+     
+        jQuery.each(JSON.parse(data), function() {
+          
+          html += '<tr><td>'+this[0]+'</td>';
+          html += '<td>'+this[1]+'</td>';
+          html += '<td>'+this[2]+'</td>';
+          html += '<td>'+this[3]+'</td>';
+          html += '<td>'+this[4]+'</td></tr>';
+        });
+        
+    });
+     html += '</tbody></table>';
+     return html;   
+            
+}
 $(document).on("click",".kirim-delete-item",function(e){
         var key = $(this).attr("data-cart");
         $("#"+key).remove();
@@ -145,16 +168,31 @@ clipboard.on('error', function(e) {
         //Set column definition initialisation properties.
         "columnDefs": [
             { 
-           
+            "class": "details-control",
             "targets": [ 0 ], //first column / numbering column
             "orderable": false, //set not orderable
-           
+            'defaultContent': '',
             },
         ],
          
            
 
     });
+   $('#table tbody').on('click', 'td.details-control', function () {
+        var tr = $(this).closest('tr');
+        var row = table.row( tr );
+ 
+        if ( row.child.isShown() ) {
+            // This row is already open - close it
+            row.child.hide();
+            tr.removeClass('shown');
+        }
+        else {
+            // Open this row
+            row.child( format(row.data()) ).show();
+            tr.addClass('shown');
+        }
+    } );
 
   var hash = window.location.hash.substring(1); //get the string after the hash
   });

@@ -2347,14 +2347,15 @@ class Master extends CI_Controller {
             foreach ($list as $query) {
                 $no++;
                 $row = array();
+                $row[] = '';
                 $row[] = $no;
                 $row[] = date("d M Y",  strtotime($query->tanggal));
                 $row[] = '<span class="nota-text">'.$query->nota.'</span> &nbsp<a class="btn btn-round btn-warning btn-xs copyboard">Copy</a>';
                 $row[] = $query->konsumen;
-                $row[] = $query->barang;
+                /*$row[] = $query->barang;
                 $row[] = $query->jumlah;
-                $row[] = $query->note;
-                $row[] = '<div class="btn-group"><a class="btn btn-primary dropdown-toggle btn-sm" data-toggle="dropdown" href="#"><i class="fa fa-cog"></i> <span class="caret"></span></a><ul role="menu" class="dropdown-menu pull-right"><li role="presentation"><a role="menuitem" tabindex="-1"  onclick="edit('."'".$query->id."'".')"  data-toggle="modal" href="#edit" title="Ubah"><i class="fa fa-edit"></i> Ubah</a></li><li><a role="menuitem" data-toggle="modal" tabindex="-1"  onclick="hapusnota('."'".$query->nota."'".','."'".$no."'".')" title="Hapus"><i class="fa fa-times"></i> Hapus</a></li></ul></div>
+                $row[] = $query->note;*/
+                $row[] = '<div class="btn-group"><a class="btn btn-primary dropdown-toggle btn-sm" data-toggle="dropdown" href="#"><i class="fa fa-cog"></i> <span class="caret"></span></a><ul role="menu" class="dropdown-menu pull-right"><li role="presentation"><a role="menuitem" tabindex="-1"  onclick="kirim('."'".$query->id."'".')"  data-toggle="modal" href="#kirim" title="Ubah"><i class="fa fa-truck"></i> Kirim</a></li><li role="presentation"><a role="menuitem" tabindex="-1"  onclick="edit('."'".$query->id."'".')"  data-toggle="modal" href="#edit" title="Ubah"><i class="fa fa-edit"></i> Ubah</a></li><li><a role="menuitem" data-toggle="modal" tabindex="-1"  onclick="hapusnota('."'".$query->nota."'".','."'".$no."'".')" title="Hapus"><i class="fa fa-times"></i> Hapus</a></li></ul></div>
                       ';
             $data[] = $row;
         }
@@ -2403,6 +2404,22 @@ class Master extends CI_Controller {
         $this->Master_model->hpstemplate($arr,$tabel);
         echo json_encode(array("status" => TRUE));
         
+    }
+    public function detailSend($nota){
+            $items = $this->Stockkirim_model->detailItem($nota);
+            $data = array();
+            foreach ($items as $item) {
+                $row = array();
+                $row[] = $item->barang;
+                $row[] = $item->jumlah;
+                $row[] = $item->kirim;
+                $row[] = $item->jumlah-$item->kirim;
+                $row[] = $this->Stockkirim_model->getNote($item->id_labarugi)->note;
+               
+                $data[] = $row;
+            }
+            echo json_encode($data);
+            exit();
     } 
     public function detailItem($nota){
         $items = $this->Master_model->gettemplate(array('nota'=>$nota),'laba_rugi',1);
@@ -2489,7 +2506,7 @@ class Master extends CI_Controller {
         $kode = $this->session->userdata('NAMA');
         $exist = $this->Master_model->gettemplate(array('kode' => $kode, 'pass' => md5($data['password'])),'kpm' );
         if (!empty($exist)) {
-           $this->Master_model->update(array('kode' => $kode, 'pass' => md5($data['password'])),array('kode' => $data['username']), 'kpm');
+           $this->Master_model->update(array('kode' => $kode, 'pass' => md5($data['password'])),array('kode' => $data['kpm'],'kode' => $data['username']), 'kpm');
            $this->session->set_userdata('NAMA', $data['username']);
            echo json_encode(array('status' => true));
         }else{

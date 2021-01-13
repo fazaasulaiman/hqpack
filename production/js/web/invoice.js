@@ -857,6 +857,7 @@ function tambah(){
     key = 'cart'+Math.round((new Date()).getTime()/1000);
     console.log(key);
     jumlah = perkalian($('#qty').val(),$('#harga').val());
+    console.log(jumlah);
    var display = '<tr class="cart-value" id="'+key+'">' +
                   /*'<td></td>' +*/
                   '<td><input type="hidden" value="'+$('#barang').val()+'" name="trx['+key+'][barang]">'+ $('#barang').val() +'</td>' +
@@ -1051,11 +1052,4 @@ function updateitem(){
 
         }
     });
-}
-function perkalian(val,param){
-
-  param=='qty' ? param1 = val : param2 = val.split(".").join("");
-  var jumlah = param1*param2;
-  return jumlah.toLocaleString('id');
-  
 }

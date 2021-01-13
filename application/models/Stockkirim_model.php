@@ -109,5 +109,26 @@
      $query = $this->db->get();
         return $query->row();
    }
+   function detailItem($nota){
+
+        $this->db->select('stock_kirim.id_labarugi,stock_kirim.barang,sum(stock_kirim.jumlah) as kirim,laba_rugi.qty as jumlah');
+        $this->db->from('stock_kirim');
+        $this->db->join('laba_rugi', 'laba_rugi.id = stock_kirim.id_labarugi');
+        $this->db->where('stock_kirim.nota',$nota);
+        $this->db->group_by('stock_kirim.nota,stock_kirim.id_labarugi');
+        $this->db->order_by('stock_kirim.created_on','asc');
+         $query = $this->db->get();
+        return $query->result();
+   }
+   function getNote($id){
+
+    $this->db->select('note');
+    $this->db->from('stock_kirim');
+    $this->db->where('id_labarugi',$id);
+    $this->db->order_by('created_on','desc');
+    $this->db->limit(1);
+    $query = $this->db->get();
+        return $query->row();
+   }
 
 }

@@ -160,13 +160,14 @@ tr.shown td.details-control {
                             <table id="table" class="table table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
                                 <thead>
                                     <tr>
-                                       <th width="5%">No</th>
-                                        <th width="10%">Tanggal</th>
-                                        <th width="10%">Nota</th>
-                                        <th width="15%">Konsumen</th>
-                                        <th width="20%">Barang</th>
+                                        <th width="5%"></th>
+                                        <th width="5%">No</th>
+                                        <th width="20%">Tanggal</th>
+                                        <th width="20%">Nota</th>
+                                        <th width="25%">Konsumen</th>
+                                        <!-- <th width="20%">Barang</th>
                                         <th width="5%">Jumlah Kirim</th>
-                                        <th width="*">Note</th>
+                                        <th width="*">Note</th> -->
                                         <th width="5%">Aksi</th>
                                     </tr>
                                 </thead>
@@ -174,14 +175,14 @@ tr.shown td.details-control {
                                 </tbody>
                                 <tfoot>
                                     <tr>
-                                        
+                                        <th width="5%"></th>
                                         <th width="5%">No</th>
-                                        <th width="10%">Tanggal</th>
-                                        <th width="10%">Nota</th>
-                                        <th width="15%">Konsumen</th>
-                                        <th width="20%">Barang</th>
+                                        <th width="20%">Tanggal</th>
+                                        <th width="20%">Nota</th>
+                                        <th width="25%">Konsumen</th>
+                                        <!-- <th width="20%">Barang</th>
                                         <th width="5%">Jumlah Kirim</th>
-                                        <th width="*">Note</th>
+                                        <th width="*">Note</th> -->
                                         <th width="5%">Aksi</th>
                                     </tr>
                                 </tfoot>
