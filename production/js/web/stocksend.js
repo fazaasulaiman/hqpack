@@ -209,7 +209,16 @@ $('#riwayat-barang').click(function () {
 });
 $('#validate').click(function () {
     if ( $('#tambah').parsley().validate()){
-        save();
+        save('#tambah');
+    }
+    else
+    {
+      gagal();
+    }
+});
+$('#validate3').click(function () {
+    if ( $('#tambah-modal').parsley().validate()){
+        save('#tambah-modal');
     }
     else
     {
@@ -227,7 +236,7 @@ $('#validate2').click(function () {
 });
 
 
-function save(){
+function save(form){
     $('#validate').text('Submit...'); //change button text
     $('#validate').attr('disabled'); //set button enable 
     var print;
@@ -236,7 +245,7 @@ function save(){
         context: this,
         url: site_url+"Master/addstocksend",
         type: "POST",
-        data: $('#tambah').serialize(),
+        data: $(form).serialize(),
         dataType: "JSON",
         async:false, 
         success: function(data)
@@ -248,7 +257,9 @@ function save(){
                 berhasil();
                 info('mohon tunggu sebentar...');
                 print = data;
-                
+                 $('#modkirim').modal('hide');
+            $('#validate3').text('Submit'); 
+            $('#validate3').attr('disabled',false);
                table.ajax.reload(null,false);
                 
             }else{
@@ -651,6 +662,48 @@ $.ajax({
         $('#modubah').modal('show'); // show bootstrap modal when complete loaded
         $('.modal-title').text('Edit Data'); // Set title to Bootstrap modal title
         table.ajax.reload(null,false);
+        
+    },
+    error: function (jqXHR, textStatus, errorThrown)
+    {
+        alert('Error get data from ajax');
+    },
+});
+}
+function kirim(nota)
+{
+  $('#send-item-modal').children().empty().remove();  
+var url = site_url+"Master/getbarangfromnota/";
+
+$.ajax({
+    url : url,
+    type: "get",
+    data: {nota:nota},
+    dataType: "JSON",
+    success: function(data)
+    { 
+         var display = '';
+         jQuery.each(data, function(index,item) {
+          if(item.qty > 0 ){
+            display += '<tr class="cart-value" id="'+item.id+'"><input type="hidden" value="'+item.id+'" name="trx['+item.id+'][id_labarugi]">' +
+                  /*'<td></td>' +*/
+                  '<td>'+ item.tanggal +'</td>' +
+                  '<td><input type="hidden" value="'+item.barang+'" name="trx['+item.id+'][barang]">'+item.barang +'</td>' +
+                  '<td>'+item.qty +'</td>' +
+                  '<td><input type="text"  name="trx['+item.id+'][jumlah]" class="form-control col-md-7 col-xs-12" data-parsley-max="'+item.qty +'" data-parsley-type="integer" required="required"></td>' +
+                  '<td><textarea type="text"  name="trx['+item.id+'][note]" class="form-control col-md-7 col-xs-12"></textarea></td>' +
+                  '<td data-cart="'+item.id+'"><span class="btn btn-danger btn-sm kirim-delete-item"  data-cart="'+item.id+'">x</span></td>' +
+                  '</tr>'; 
+          }
+          
+
+            $("#nama-konsumen-modal").text('Konsumen: '+item.konsumen);  
+          });
+           
+        $("#send-item-modal").append(display);
+        $("#nota-modal").val(nota);
+        $('#modkirim').modal('show');
+        $('.modal-title').text('Form Kirim Nota: '+nota);
         
     },
     error: function (jqXHR, textStatus, errorThrown)

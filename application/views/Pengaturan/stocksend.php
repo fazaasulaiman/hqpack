@@ -272,3 +272,47 @@ tr.shown td.details-control {
                     </div>
                   </div>
                 </div>
+<div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" id="modkirim" aria-hidden="true">
+                    <div class="modal-dialog modal-lg">
+                      <div class="modal-content">
+
+                        <div class="modal-header">
+                          <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
+                          </button>
+                          <h4 class="modal-title" id="myModalLabel"></h4>
+                        </div>
+                        <div class="modal-body">
+                           <form class="form-horizontal form-label-left" id="tambah-modal" data-parsley-validate>
+                            <input type="hidden" name="<?=$this->security->get_csrf_token_name();?>" value="<?=$this->security->get_csrf_hash();?>" style="display: none">
+                            <input type="hidden" name="nota" id="nota-modal">
+                            <span class="section" id="nama-konsumen-modal"></span>
+                          <table class="table">
+                            <thead>
+                              <tr>
+                                <!-- <th>NO</th> -->
+                                  <th>Tanggal Order</th>
+                                  <th>Barang</th>
+                                  <th>Qty</th>
+                                  <th>Qty Kirim</th>
+                                  <th>Note</th>
+                                  <th></th>
+                              </tr>
+                            </thead>
+                            <tbody id="send-item-modal">
+                              
+                            </tbody>
+                        
+                          </table>
+
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+
+                          <a class="btn btn-primary" id="validate3">Submit</a>
+                          
+                        </div>
+                      </form>
+                      </div>
+                    </div>
+                  </div>
+                </div>

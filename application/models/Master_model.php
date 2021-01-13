@@ -333,8 +333,6 @@
         }
        
     }
-    public function detailSend($nota){
-        
-    }
+   
 
 }
