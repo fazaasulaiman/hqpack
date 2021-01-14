@@ -2506,7 +2506,7 @@ class Master extends CI_Controller {
         $kode = $this->session->userdata('NAMA');
         $exist = $this->Master_model->gettemplate(array('kode' => $kode, 'pass' => md5($data['password'])),'kpm' );
         if (!empty($exist)) {
-           $this->Master_model->update(array('kode' => $kode, 'pass' => md5($data['password'])),array('kode' => $data['kpm'],'kode' => $data['username']), 'kpm');
+           $this->Master_model->update(array('kode' => $kode, 'pass' => md5($data['password'])),array('kode' => $data['username'],'kode' => $data['username']), 'kpm');
            $this->session->set_userdata('NAMA', $data['username']);
            echo json_encode(array('status' => true));
         }else{

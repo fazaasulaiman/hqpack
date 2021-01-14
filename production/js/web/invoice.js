@@ -502,7 +502,8 @@ function readyprint(data,type){
   items.push([{text:'No',fillColor: '#dedede'},{text:'Keterangan',fillColor: '#dedede'},{text:'Qty',fillColor: '#dedede'},{text:'Harga',fillColor: '#dedede'},{text:'Total',fillColor: '#dedede'}]);
   i = 0;
   data.item.forEach(function (item) { 
-           items.push([i+1,item.barang,formatRupiah(item.qty.replace('.',','), "Rp. "),formatRupiah(item.harga, "Rp. "),formatRupiah(item.penjualan.replace('.',','), "Rp. ")]);
+          harga = Math.floor(item.harga);
+           items.push([i+1,item.barang,formatRupiah(item.qty.replace('.',','), "Rp. "),formatRupiah(harga.toString(), "Rp. "),formatRupiah(item.penjualan.replace('.',','), "Rp. ")]);
            i++;
   }); 
   items.push([
